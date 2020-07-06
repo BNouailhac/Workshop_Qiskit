@@ -12,6 +12,7 @@ Commencons par installer les prérequis:
 - ensuite lancer le et faite "pip install qiskit"
 - maintenant faite "jupyter notebook"
 cela devrait vous ouvrir cela dans votre navigateur:
+
 ![Main Menu](https://github.com/BNouailhac/Workshop_Quiskit/blob/master/git%20image/Capture.PNG)
 
 ----------------------------
