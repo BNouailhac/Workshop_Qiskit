@@ -87,4 +87,84 @@ circuit.measure(qr, cr)
 
 circuit.draw(output = 'mpl')
 ```
-> le "output = 'mpl'" nous sert juste 
+> le "output = 'mpl'" nous sert juste à changer le type d'affichage.
+
+----------------------------
+## 10. étape :
+maintenant nous allons écrire les résultats des deux portes d'avants sur les bits classiques:
+```
+circuit.measure(qr, cr)
+
+circuit.draw(output = 'mpl')
+```
+> le "output = 'mpl'" nous sert juste à changer le type d'affichage.
+
+----------------------------
+## 11. étape :
+et maintenant nous allons tester notre circuit en local:
+```
+simulator = Aer.get_backend('qasm_simulator') // on utiliser le simulateur 'qasm_simulator'
+
+result = execute(circuit, backend = simulator).result() // on lance le test
+```
+
+----------------------------
+## 12. étape :
+et affichons les résultats dans un histogram:
+```
+from qiskit.tools.visualization import plot_histogram
+
+plot_histogram(result.get_counts(circuit))
+```
+> Si cela à bien fonctionné vous avez maintenant un les différents résultats obtenue qui apparaisse  à l'écran.
+
+----------------------------
+## 13. étape :
+Nous avons pu voir avant que notre code fonctionné sur notre ordianteur, donc éssayons maintenant de tester notre code sur un véritable ordinateur quantique:
+Pour cela il va falloir créer un compte IBM et récupérer une clef d'accès: https://quantum-computing.ibm.com/
+
+![IBM](https://github.com/BNouailhac/Workshop_Quiskit/blob/master/git%20image/Capture3.PNG)
+
+Ensuite on l'utilise comme cela:
+```
+from qiskit import IBMQ
+
+IBMQ.save_account('votre_token')
+
+IBMQ.load_account()
+```
+
+----------------------------
+## 14. étape :
+Ensuite on paramètre le teste que l'on va executer:
+```
+provider = IBMQ.get_provider('ibm-q') // on dit que le fournisseur est ibm
+
+qcomp = provider.get_backend('ibmq_16_melbourne') // on veut utiliser l'ordinateur quantique du nom de 'ibmq_16_melbourne'
+
+job = execute(circuit, backend=qcomp) // on donne à job (la viariable qui va effectuer le test) notre circuit.
+```
+
+----------------------------
+## 15. étape :
+Lançons le test:
+```
+from qiskit.tools.monitor import job_monitor
+
+job_monitor(job)
+```
+> Cela va prendre plusieurs minutes car vous allez devoir faire la queue avec les autres personnes souhaitant utiliser le même ordinateur quantique que vous.
+
+----------------------------
+## 16. étape :
+Affichons les tests:
+```
+result = job.result()
+
+plot_histogram(result.get_counts(circuit))
+```
+> Vous pouvez vous rendre compte que les résultats sont différends de ceux de tout a l'heure, cela est du au fait que même si qiskit peut simuler un ordinateur quantique, il ne le fait pas parfaitement ce qui explique la différence de résultat.
+
+----------------------------
+## 17. étape :
+Merci d'avoir suivi ce Workshop, si vous souhaitez aller plus loin dans l'utilisation de qiskit, n'hésitez à continuez a apprendre sur ce framework directement sur le site de qiskit : https://qiskit.org/
